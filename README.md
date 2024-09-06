@@ -1,5 +1,5 @@
-# *Your Project Description*
-## *Sponsoring Company or Organization*
+# *Automating Community-Engaged Research and Evaluation (CeRN): A computational framework for data collection, processing, and visualization*
+## *VCU Wright Center for Clinical Trials*
 ## *Short Project Description*
 The directory structure in this GitHub is to allow the project to have all its resources self-contained.
 Open Source software should not just be a repository of code.  There are a number of directories to help you and others who will 
@@ -17,10 +17,9 @@ a better understanding of the problems you encountered during the development of
 **Note:** Commits behind this fork could be automatically synced, meaning that changes made in the template are pushed into your repo. Please do not discard commits ahead (these are the updates you make to this repository).
 
 ## Project Team
-- *Mentor's Name*  - *Company Affliation* - Mentor
-- *Technical Advisor Name* - *Company Affliation* - Technical Advisor
-- *Faculty Advisor's Name* - *Department* - Faculty Advisor
-- *Student's Name* - *major* - Student Team Member
-- *Student's Name* - *major* - Student Team Member
-- *Student's Name* - *major* - Student Team Member
-- *Student's Name* - *major* - Student Team Member
+- *Amy Olex*  - *VCU Wright Center for Clinical Trials* - Sponsor
+- *Bridget McInnes* - *CS* - Faculty Advisor
+- *Levi Thompson* - *CS* - Student Team Member
+- *Abdul Koroma* - *CS* - Student Team Member
+- *Jasper Early* - *CS* - Student Team Member
+- *Tristan Weigand* - *CS* - Student Team Member
