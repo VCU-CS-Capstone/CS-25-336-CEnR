@@ -1,21 +1,24 @@
-# *CS 25-XXX Project Name*
+# *CS 25-336 CEnR*
 
-**Students' Names:**
+**Students' Names: Abdul Koroma, Levi Thompson, Jasper Early, Tristan Weigand**
 
-**Mentor:**
+**Sponsor: Amy Olex**
 
-**Faculty Advisor:**
+**Faculty Advisor: Bridget McInnes**
 
 ## 1) Accomplishments this week ##
-   - investigate databases done by student A
-   - make flowcharts done by students A and B
+   - Read background resources provided by sponsor
+   - Identified existing resources and groundwork which already exists relating to this project
+   - Started identifying necessary steps towards completion of project proposal
+   - Each member created an Athena account to access VCU's high performance computation clusters
 
 ## 2) Milestones to be completed next week ##
-   - debug the code to be performed by student C
+   - Attend monthly meeting of the Community Engagement Evaluation Team
+     - Use this meeting to inform first draft of project proposal
+   - Prepare first draft of project proposal ahead of meeting with sponsor & advisor on Thursday
 
 ## 3) Issues, problems or concerns ##
-   - student C needs to learn java
-   - database repository costs big $$$
+   - No significant concerns occurred in this week
    
 
 
