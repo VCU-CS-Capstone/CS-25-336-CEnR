@@ -9,9 +9,9 @@ Status Report Fall Week XX.md is a template for to copy-paste into new Status re
 
 ## Fall Semester
 
-| Document | Tasks | Accomplishments | Issues |
+| Document | Accomplishments | Next Tasks | Issues |
 |---|---|---|---|
-| Week 1 Status Report | We've accomplished a lot | We'll accomplish even more | No problems to report! |
+| Week 1 Status Report | Read Background Resources, Created Athena Accounts | Attend CEnET meeting, Project Report 1st Draft | No issues of note |
 | Week 2 Status Report | | | |
 | Week 3 Status Report | | | |
 | Week 4 Status Report | | | |
