@@ -1,11 +1,5 @@
 # Status Reports Folder
-Weekly status reports go into this folder
-
-This Readme.md serves as the front page of this folder - update the table with very succinct weekly reports.
-
-Project Plan.md is a document that should be updated accordingly as the project develops through the year.
-
-Status Report Fall Week XX.md is a template for to copy-paste into new Status reports you generate every week.
+This readme.md serves as a succinct summary of weekly status reports.
 
 ## Fall Semester
 
