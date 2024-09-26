@@ -7,7 +7,7 @@ This readme.md serves as a succinct summary of weekly status reports.
 |---|---|---|---|
 | Week 1 Status Report | Read Background Resources, Created Athena Accounts | Attend CEnET meeting, Project Report 1st Draft | No issues of note |
 | Week 2 Status Report |Attended CEnEt meeting |Look over Data in athena | No issues to report|
-| Week 3 Status Report |Looked over Data in athena Drawed up questions|Finish first drafts |No issues to report|
+| Week 3 Status Report |Looked over Data in athena Drawed up questions|Finish Project Report 1st drafts |No issues to report|
 | Week 4 Status Report | | | |
 | Week 5 Status Report | | | |
 | Week 6 Status Report | | | |
