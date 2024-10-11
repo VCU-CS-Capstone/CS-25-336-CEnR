@@ -9,7 +9,7 @@ This readme.md serves as a succinct summary of weekly status reports.
 | Week 2 Status Report |Attended CEnR meeting |Look over Data in athena | No issues to report|
 | Week 3 Status Report |Looked over Data in athena; Drew up questions|Finish Project Report 1st drafts |No issues to report|
 | Week 4 Status Report |Finished Project Proposal draft; Sent draft to advisor & sponsor to review |Wait for & address feedback on proposal draft; Complete Gannt chart and proposal |No issues to report|
-| Week 5 Status Report | | | |
+| Week 5 Status Report |Revised, Edited, and Finalized Proposal |Begin Brainstorming, Create Database Diagram |No issues to report |
 | Week 6 Status Report | | | |
 | Week 7 Status Report | | | |
 | Week 8 Status Report | | | |
