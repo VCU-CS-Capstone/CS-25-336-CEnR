@@ -12,8 +12,8 @@ This readme.md serves as a succinct summary of weekly status reports.
 | Week 5 Status Report |Revised, Edited, and Finalized Proposal |Begin Brainstorming, Create Database Diagram |No issues to report |
 | Week 6 Status Report |Met with Dr. McInnes to review Project Proposal; Completed rough databse diagram |Work further on database design; Begin planning API design and Project Poster |No issues to report |
 | Week 7 Status Report |Reviewed Poster template and expectations; Discussed database and API design |Split into pairs and work on Poster, or analyzing code |No issues to report |
-| Week 8 Status Report | | | |
-| Week 9 Status Report | | | |
+| Week 8 Status Report |Edited existing code to run on Athena, began plans for poster |Run code on Athena, create an initial poster |No issues to report |
+| Week 9 Status Report |Succesfully ran existing code, made draft of poster |Recieve feeback on poster draft, make necessary changes |No issues to report |
 | Week 10 Status Report | | | |
 | Week 11 Status Report | | | |
 | Week 12 Status Report | | | |
