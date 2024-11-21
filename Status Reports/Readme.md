@@ -14,11 +14,11 @@ This readme.md serves as a succinct summary of weekly status reports.
 | Week 7 Status Report |Reviewed Poster template and expectations; Discussed database and API design |Split into pairs and work on Poster, or analyzing code |No issues to report |
 | Week 8 Status Report |Edited existing code to run on Athena, began plans for poster |Run code on Athena, create an initial poster |No issues to report |
 | Week 9 Status Report |Succesfully ran existing code, made draft of poster |Recieve feeback on poster draft, make necessary changes |No issues to report |
-| Week 10 Status Report |Edited poster, recieved further feedback, finished work on poster |Practice poster presentaion, begin preliminary design report |No issues to report |
-| Week 11 Status Report | | | |
-| Week 12 Status Report | | | |
-| Week 13 Status Report | | | |
-| Week 14 Status Report | | | |
+| Week 10 Status Report |Edited poster|Recieve feedback and begin preliminary design report |No issues to report |
+| Week 11 Status Report |Brainstorm ideas on Prelimnary|Recieve feedback on previous edit made to poster |No issues to report |
+| Week 12 Status Report |Final edits made to poster|Discuss poster with Faculty advisor|No issues to report |
+| Week 13 Status Report |Poster completed |Practice poster presentation |No issues to report |
+| Week 14 Status Report |Practiced poster Presentation|Keep working on Design report |No issues to report |
 | Week 15 Status Report | | | |
 | Week 16 Status Report | | | |
 
