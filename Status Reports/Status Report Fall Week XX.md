@@ -7,13 +7,7 @@
 **Faculty Advisor: Bridget McInnes**
 
 ## 1) Accomplishments this week ##
-   - Completed bidding on capstone projects
 
 ## 2) Milestones to be completed next week ##
-   - Meet with team members, sponsor & faculty advisor
 
 ## 3) Issues, problems or concerns ##
-   - No issues to report
-   
-
-
