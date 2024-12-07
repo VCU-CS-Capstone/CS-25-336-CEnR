@@ -7,10 +7,10 @@
 **Faculty Advisor: Bridget McInnes**
 
 ## 1) Accomplishments this week ##
-- Met with Project Sponsor; Discussed client needs and project overview; Looked over data in Athena
+- Successful Poster Session; Prelim Report submitted; Team divided into pairs- Frontend and Backend
 
 ## 2) Milestones to be completed next week ##
-- Read resources sent by Dr. Olex
+- Prepare for Spring Semester; Prioritize getting database running & wireframing UI
 
 ## 3) Issues, problems or concerns ##
-- No issues to report
+- Have not had much time for coding & working on the client deliverables

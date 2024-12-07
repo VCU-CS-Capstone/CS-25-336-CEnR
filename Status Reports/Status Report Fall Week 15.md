@@ -7,10 +7,10 @@
 **Faculty Advisor: Bridget McInnes**
 
 ## 1) Accomplishments this week ##
-- Met with Project Sponsor; Discussed client needs and project overview; Looked over data in Athena
+- Fall Break
 
 ## 2) Milestones to be completed next week ##
-- Read resources sent by Dr. Olex
+- Poster Session Monday!
 
 ## 3) Issues, problems or concerns ##
 - No issues to report
