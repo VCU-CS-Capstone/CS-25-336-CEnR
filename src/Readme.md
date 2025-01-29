@@ -4,7 +4,7 @@ To be structured as needed by project team.
 Please document here
 | Subdirectory Name | Description |
 |---|---|
-| GUI | |
+| GUI | GUI to select files |
 | | |
 | | |
 | | |
