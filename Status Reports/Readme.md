@@ -24,10 +24,10 @@ This readme.md serves as a succinct summary of weekly status reports.
 
 ## Spring Semester
 
-| Document | Tasks | Accomplishments| Issues |
+| Document | Accomplishments | Next Tasks | Issues |
 |---|---|---|---|
-| Week 1 01/17 Status Report | | | |
-| Week 2 01/24 Status Report | | | |
+| Week 1 01/17 Status Report | Made progress on code, made progress on initial wireframe | Continue work on code + wireframe | No issues to report |
+| Week 2 01/24 Status Report | Finished initial wireframe and initial gui for code | Continue work on wireframe and code, do team contract revisions | No issues to report |
 | Week 3 01/31 Status Report | | | |
 | Week 4 02/07 Status Report | | | |
 | Week 5 02/14 Status Report | | | |
