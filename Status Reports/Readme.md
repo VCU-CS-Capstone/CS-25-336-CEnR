@@ -28,8 +28,8 @@ This readme.md serves as a succinct summary of weekly status reports.
 |---|---|---|---|
 | Week 1 01/17 Status Report | Made progress on code, made progress on initial wireframe | Continue work on code + wireframe | No issues to report |
 | Week 2 01/24 Status Report | Finished initial wireframe and initial gui for code | Continue work on wireframe and code, do team contract revisions | No issues to report |
-| Week 3 01/31 Status Report | | | |
-| Week 4 02/07 Status Report | | | |
+| Week 3 01/31 Status Report | Resolved errors in code, worked more on wireframes | Work further on templates and on combining code and wireframe | No issues to report|
+| Week 4 02/07 Status Report | Did some iteration on code and framework, discussed next week's CEnR meeting | Present current wireframe in CEnR meeting | Athena has begun running poorly |
 | Week 5 02/14 Status Report | | | |
 | Week 6 02/21 Status Report | | | |
 | Week 7 02/28 Status Report | | | |
