@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <meta charset="utf-8"/>
+        <title>{% block title %} - Machine Learning Dashboard {% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+        {% include 'nav.html' %}
+    </head>
+    <body> 
+        {% block content %}
+        {% endblock %}
+    </body>
+
+</html>

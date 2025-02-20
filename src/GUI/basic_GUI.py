@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, redirect, url_for
+from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 import os
 import tarfile
@@ -39,7 +39,7 @@ model_args = {
 
 @app.route("/", methods = ['GET', 'POST'])
 def upload_files():
-    if request.method == 'POST':
+    '''if request.method == 'POST':
         if 'zipfile' not in request.files:
             flash('No zip part')
             return redirect(request.url)
@@ -63,8 +63,9 @@ def upload_files():
             datafile_name = secure_filename(datafile.filename)
             zipfile.save(os.path.join(app.config['UPLOAD_FOLDER'], zipfile_name))
             datafile.save(os.path.join(app.config['UPLOAD_FOLDER'], datafile_name))
-            return redirect(url_for('display_output', zipname=zipfile_name, dataname=datafile_name))
-    return '''
+            return redirect(url_for('display_output', zipname=zipfile_name, dataname=datafile_name))'''
+    return render_template('index.html')
+    '''
     <!doctype html>
     <title>Upload new Files</title>
     <h1>Upload model archive and data files</h1>
