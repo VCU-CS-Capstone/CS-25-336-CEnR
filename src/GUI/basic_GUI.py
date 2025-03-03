@@ -38,6 +38,7 @@ model_args = {
 }
 
 @app.route("/", methods = ['GET', 'POST'])
+@app.route("/index", methods = ['GET', 'POST'])
 def upload_files():
     '''if request.method == 'POST':
         if 'zipfile' not in request.files:
