@@ -65,7 +65,7 @@ def upload_files():
             zipfile.save(os.path.join(app.config['UPLOAD_FOLDER'], zipfile_name))
             datafile.save(os.path.join(app.config['UPLOAD_FOLDER'], datafile_name))
             return redirect(url_for('display_output', zipname=zipfile_name, dataname=datafile_name))'''
-    return render_template('index.html')
+    return render_template('CEnR_HTML.html')
     '''
     <!doctype html>
     <title>Upload new Files</title>
