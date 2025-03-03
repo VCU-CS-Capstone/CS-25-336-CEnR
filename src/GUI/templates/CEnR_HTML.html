@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEnR Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Get Started</a></li>
+                <li><a href="#">Run Model</a></li>
+                <li><a href="#">Save</a></li>
+                <li><a href="#">User</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="section01" class="intro">
+        <div class="container">
+            <h1>CEnR</h1>
+            <p>Enable research data to be stored and processed...</p>
+            <button class="btn">Get Started</button>
+        </div>
+    </section>
+
+    <section id="section02" class="model-run">
+        <div class="container">
+            <select class="dropdown">
+                <option>Select Dataset</option>
+                <option>Dataset 1</option>
+                <option>Dataset 2</option>
+            </select>
+            <select class="dropdown">
+                <option>Select Model</option>
+                <option>Model 1</option>
+                <option>Model 2</option>
+            </select>
+            <button class="btn run">Run</button>
+            <div class="data-distribution">
+                <h3>Data Distribution</h3>
+                <div class="chart-placeholder">[Pie Chart Here]</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="section03" class="results">
+        <div class="container">
+            <h2>Model Results</h2>
+            <p>Model results - how many it categorized...</p>
+            <div class="charts">
+                <div class="chart-placeholder">[Bar Graph Here]</div>
+                <div class="chart-placeholder">[Performance Chart Here]</div>
+            </div>
+            <button class="btn export">Export Results</button>
+        </div>
+    </section>
+</body>
+</html>
