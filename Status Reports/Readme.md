@@ -30,9 +30,9 @@ This readme.md serves as a succinct summary of weekly status reports.
 | Week 2 01/24 Status Report | Finished initial wireframe and initial gui for code | Continue work on wireframe and code, do team contract revisions | No issues to report |
 | Week 3 01/31 Status Report | Resolved errors in code, worked more on wireframes | Work further on templates and on combining code and wireframe | No issues to report|
 | Week 4 02/07 Status Report | Did some iteration on code and framework, discussed next week's CEnR meeting | Present current wireframe in CEnR meeting | Athena has begun running poorly |
-| Week 5 02/14 Status Report | | | |
-| Week 6 02/21 Status Report | | | |
-| Week 7 02/28 Status Report | | | |
+| Week 5 02/14 Status Report | Worked on wireframe + framework, met with CEnR group | Combine wireframe and framework, find what metadata we can use | No issues to report |
+| Week 6 02/21 Status Report | Started work on combining wireframe and framework, tried to find usable metadata | Continue work merging wireframe and framework, try to resolve issue with metadata | Files used in program do not have metadata we can use |
+| Week 7 02/28 Status Report | Got raw data to use for metadata, worked on frontend and backend of website | Make new file using raw data, work on website | No issues to report |
 | Week 8 03/07 Status Report | | | |
 | Week 9 03/21 Status Report | | | |
 | Week 10 03/28 Status Report | | | |
