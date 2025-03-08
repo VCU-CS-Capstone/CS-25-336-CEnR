@@ -7,7 +7,8 @@
 **Faculty Advisor: Bridget McInnes**
 
 ## 1) Accomplishments this week ##
-- Reviewed new raw data together; Discussed classification of metadata
+- Reviewed new raw data together
+- Discussed classification of metadata
 
 ## 2) Milestones to be completed next week ##
 - Continue integrating front & backend
