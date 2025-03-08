@@ -10,7 +10,10 @@
 - Reviewed new raw data together; Discussed classification of metadata
 
 ## 2) Milestones to be completed next week ##
-- Continue integrating front & backend; work on classifying new raw data; enjoy spring break
+- Continue integrating front & backend
+- Work on classifying new raw data
+- Prepare for CEnR meeting 03/19
+- Enjoy spring break
 
 ## 3) Issues, problems or concerns ##
 - No issues to report
