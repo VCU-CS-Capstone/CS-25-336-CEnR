@@ -33,7 +33,7 @@ This readme.md serves as a succinct summary of weekly status reports.
 | Week 5 02/14 Status Report | Worked on wireframe + framework, met with CEnR group | Combine wireframe and framework, find what metadata we can use | No issues to report |
 | Week 6 02/21 Status Report | Started work on combining wireframe and framework, tried to find usable metadata | Continue work merging wireframe and framework, try to resolve issue with metadata | Files used in program do not have metadata we can use |
 | Week 7 02/28 Status Report | Got raw data to use for metadata, worked on frontend and backend of website | Make new file using raw data, work on website | No issues to report |
-| Week 8 03/07 Status Report | | | |
+| Week 8 03/07 Status Report | Reviewed new raw data together; Discussed classification of metadata | Continue integrating front & backend; work on classifying new raw data; enjoy spring break | No issues to report |
 | Week 9 03/21 Status Report | | | |
 | Week 10 03/28 Status Report | | | |
 | Week 11 04/04 Status Report | | | |
