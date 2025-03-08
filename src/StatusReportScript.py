@@ -74,8 +74,8 @@ for row in table_rows:
         issues=issues,
     )
 
-    # Create file name (e.g., "Status Report Fall Week 1.md")
-    report_filename = f"Status Report Fall Week {week_number}.md"
+    # Create file name (e.g., "Status Report Spring Week 1.md")
+    report_filename = f"Status Report Spring Week {week_number}.md"
     report_path = os.path.join(output_dir, report_filename)
 
     # Write to file
