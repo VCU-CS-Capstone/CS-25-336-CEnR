@@ -1,4 +1,7 @@
 from flask import Flask, flash, request, redirect, url_for, render_template
+from flask_wtf import FlaskForm
+from wtforms import SelectField, SelectMultipleField
+from wtforms.validators import DataRequired
 from werkzeug.utils import secure_filename
 import os
 import tarfile
@@ -37,10 +40,26 @@ model_args = {
     'no_cache':True,
 }
 
+class RunForm(FlaskForm):
+    dataset = SelectField('Select Dataset', choices=[('', 'Select Dataset'),('example1', 'Dataset 1'), ('example2', 'Dataset 2')], validators=[DataRequired()])
+    model = SelectField('Select Model', choices=[('', 'Select Model'),('example1', 'Model 1'), ('example2', 'Model 2')], validators=[DataRequired()])
+    
+
+@app.route("/", methods= ['GET'])
+@app.route("/index", methods= ['GET'])
+def main_page():
+    run_form = RunForm()
+    if run_form.validate_on_submit():
+        selected_dataset = run_form.dataset.data
+        selected_model = run_form.model.data
+        return f'You selected: {selected_dataset}, {selected_model}'
+    return render_template('CEnR_HTML.html', form=run_form)
+
+'''
 @app.route("/", methods = ['GET', 'POST'])
 @app.route("/index", methods = ['GET', 'POST'])
 def upload_files():
-    '''if request.method == 'POST':
+    if request.method == 'POST':
         if 'zipfile' not in request.files:
             flash('No zip part')
             return redirect(request.url)
@@ -64,9 +83,9 @@ def upload_files():
             datafile_name = secure_filename(datafile.filename)
             zipfile.save(os.path.join(app.config['UPLOAD_FOLDER'], zipfile_name))
             datafile.save(os.path.join(app.config['UPLOAD_FOLDER'], datafile_name))
-            return redirect(url_for('display_output', zipname=zipfile_name, dataname=datafile_name))'''
-    return render_template('CEnR_HTML.html')
-    '''
+            return redirect(url_for('display_output', zipname=zipfile_name, dataname=datafile_name))
+    return render_template('CEnR_HTML.html')'''
+'''
     <!doctype html>
     <title>Upload new Files</title>
     <h1>Upload model archive and data files</h1>
@@ -80,7 +99,7 @@ def upload_files():
     </form>
     '''
 
-@app.route('/outputs/<zipname>+<dataname>')
+'''@app.route('/outputs/<zipname>+<dataname>')
 def display_output(zipname, dataname):
     with tarfile.open(f"{UPLOAD_FOLDER}/{zipname}", "r") as tar:
         tar.extractall(f"{UPLOAD_FOLDER}")
@@ -93,12 +112,12 @@ def display_output(zipname, dataname):
     bestcheckpoint_model = ClassificationModel("bert", f"{UPLOAD_FOLDER}/{zipname.rsplit('.', 1)[0]}", args=model_args, num_labels=3, use_cuda=False)
     predictions, raw_outputs = bestcheckpoint_model.predict(valtext)
 
-    return '''
+    return 
     <!doctype html>
     <title>Outputs</title>
     <h1>Output for selected files: %s, %s </h1>
     <p>%s</p>
-    ''' % (zipname, dataname, predictions)
+     % (zipname, dataname, predictions)'''
 
 
 def clean_text(text):
@@ -157,3 +176,6 @@ def clean_text(text):
     text = " ".join(lemma_words)
 
     return text
+
+if __name__ == '__main__':
+    app.run(debug=True)
