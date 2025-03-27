@@ -15,7 +15,7 @@ from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer, WordNetLemmatizer
 
 
-UPLOAD_FOLDER = './uploads'
+UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {}
 
 app = Flask(__name__)
@@ -44,16 +44,33 @@ class RunForm(FlaskForm):
     dataset = SelectField('Select Dataset', choices=[('', 'Select Dataset'),('example1', 'Dataset 1'), ('example2', 'Dataset 2')], validators=[DataRequired()])
     model = SelectField('Select Model', choices=[('', 'Select Model'),('example1', 'Model 1'), ('example2', 'Model 2')], validators=[DataRequired()])
     
+compatible_data_filetypes = {'xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt'}
+compatible_model_compressions = {}
 
-@app.route("/", methods= ['GET'])
-@app.route("/index", methods= ['GET'])
+@app.route("/", methods= ['GET', 'POST'])
+@app.route("/index", methods= ['GET', 'POST'])
 def main_page():
+    cwd = os.getcwd()
+    print(cwd)
     run_form = RunForm()
-    if run_form.validate_on_submit():
-        selected_dataset = run_form.dataset.data
-        selected_model = run_form.model.data
-        return f'You selected: {selected_dataset}, {selected_model}'
-    return render_template('CEnR_HTML.html', form=run_form)
+    if request.method == 'POST':
+        if(request.form['form_name'] == "run-model"):
+            if run_form.validate_on_submit():
+                selected_dataset = run_form.dataset.data
+                selected_model = run_form.model.data
+                return f'You selected: {selected_dataset}, {selected_model}'
+        elif(request.form['form_name'] == "upload-dataset"):
+            datafile = request.files['datafile']
+            if(datafile and (datafile.filename.rsplit('.', 1)[1].lower() in compatible_data_filetypes)):
+                datafile_name = secure_filename(datafile.filename)
+                datafile.save(os.path.join(cwd, app.config['UPLOAD_FOLDER'], datafile_name))
+        elif(request.form['form_name'] == "upload-model"):
+            modelfile = request.files['modelfile']
+            if(modelfile and (modelfile.filename.rsplit('.', 1)[1].lower() in compatible_model_compressions)):
+                modelfile_name = secure_filename(modelfile.filename)
+                modelfile.save(os.path.join(cwd, app.config['UPLOAD_FOLDER'], modelfile_name))
+                
+    return render_template('CEnR_HTML.html', run_form=run_form)
 
 '''
 @app.route("/", methods = ['GET', 'POST'])

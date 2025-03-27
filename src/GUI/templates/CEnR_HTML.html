@@ -31,20 +31,34 @@
     <section id="section02" class="model-run">
         <div class="container">
             <form method="POST">
-                {{ form.csrf_token }}
+                <input type="hidden" name="form_name" value="run-model">
+                {{ run_form.csrf_token }}
                 <select class="dropdown">
-                    {% for field in form.dataset %}
+                    {% for field in run_form.dataset %}
                     {{ field }}
                     {% endfor %}
                 </select>
                 <select class="dropdown">
-                    {% for field in form.model %}
+                    {% for field in run_form.model %}
                     {{ field }}
                     {% endfor %}
                 </select>
                 <button type="submit" class="btn run" style="margin:0;display:inline-block">Run</button>
             </form>
 
+            <form method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="form_name" value="upload-dataset">
+                <h5 style="display: inline;">Upload new dataset file: </h5>
+                <input type=file name=datafile>
+                <input type=submit value=Upload>
+            </form>
+
+            <form method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="form_name" value="upload-model">
+                <h5 style="display: inline;">Upload new model file: </h5>
+                <input type=file name=modelfile>
+                <input type=submit value=Upload>
+            </form>
             <!---
             <select class="dropdown">
                 <option>Select Dataset</option>
