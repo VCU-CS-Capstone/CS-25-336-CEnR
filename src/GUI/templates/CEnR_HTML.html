@@ -33,18 +33,27 @@
             <form method="POST">
                 <input type="hidden" name="form_name" value="run-model">
                 {{ run_form.csrf_token }}
-                <select class="dropdown">
+                <select id="datasets" class="dropdown" onchange="showlines(this.options[this.selectedIndex].defaultSelected, this.options[this.selectedIndex].value)">
+                    <option value="none" selected disabled hidden>Select a Dataset</option>
                     {% for field in run_form.dataset %}
                     {{ field }}
                     {% endfor %}
                 </select>
-                <select class="dropdown">
+                <select id="models" class="dropdown">
+                    <option value="none" selected disabled hidden>Select a Model</option>
                     {% for field in run_form.model %}
                     {{ field }}
                     {% endfor %}
                 </select>
                 <button type="submit" class="btn run" style="margin:0;display:inline-block">Run</button>
             </form>
+
+            <script type="text/javascript">
+                function showlines(isDefault, value) {
+                    if(!isDefault) 
+                        alert(value.split(',')[3].slice(0,-1)); 
+            }
+            </script>
 
             <form method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="form_name" value="upload-dataset">

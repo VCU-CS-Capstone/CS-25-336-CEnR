@@ -4,6 +4,7 @@ from wtforms import SelectField, SelectMultipleField
 from wtforms.validators import DataRequired
 from werkzeug.utils import secure_filename
 import os
+from pathlib import Path
 import tarfile
 import pandas as pd
 import string
@@ -21,6 +22,9 @@ ALLOWED_EXTENSIONS = {}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = "thiskeyisnotsecret"
+
+datafiles = []
+modelfiles = []
 
 model_args = {
     'evaluate_during_training': False,
@@ -41,8 +45,20 @@ model_args = {
 }
 
 class RunForm(FlaskForm):
-    dataset = SelectField('Select Dataset', choices=[('', 'Select Dataset'),('example1', 'Dataset 1'), ('example2', 'Dataset 2')], validators=[DataRequired()])
-    model = SelectField('Select Model', choices=[('', 'Select Model'),('example1', 'Model 1'), ('example2', 'Model 2')], validators=[DataRequired()])
+    dataset = SelectField('Select Dataset', validators=[DataRequired()])
+    model = SelectField('Select Model', validators=[DataRequired()])
+
+
+    def updateForm(self):
+        global datafiles
+        global modelfiles
+        dataset_choices = [(file, file[1]) for file in datafiles]
+        self.dataset.choices = dataset_choices
+
+        model_choices = [(file, file[1]) for file in modelfiles]
+        self.model.choices = model_choices
+
+        #self.process()
     
 compatible_data_filetypes = {'xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt'}
 compatible_model_compressions = {}
@@ -50,9 +66,8 @@ compatible_model_compressions = {}
 @app.route("/", methods= ['GET', 'POST'])
 @app.route("/index", methods= ['GET', 'POST'])
 def main_page():
-    cwd = os.getcwd()
-    print(cwd)
     run_form = RunForm()
+    run_form.updateForm()
     if request.method == 'POST':
         if(request.form['form_name'] == "run-model"):
             if run_form.validate_on_submit():
@@ -63,12 +78,12 @@ def main_page():
             datafile = request.files['datafile']
             if(datafile and (datafile.filename.rsplit('.', 1)[1].lower() in compatible_data_filetypes)):
                 datafile_name = secure_filename(datafile.filename)
-                datafile.save(os.path.join(cwd, app.config['UPLOAD_FOLDER'], datafile_name))
+                datafile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], datafile_name))
         elif(request.form['form_name'] == "upload-model"):
             modelfile = request.files['modelfile']
             if(modelfile and (modelfile.filename.rsplit('.', 1)[1].lower() in compatible_model_compressions)):
                 modelfile_name = secure_filename(modelfile.filename)
-                modelfile.save(os.path.join(cwd, app.config['UPLOAD_FOLDER'], modelfile_name))
+                modelfile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], modelfile_name))
                 
     return render_template('CEnR_HTML.html', run_form=run_form)
 
@@ -136,6 +151,17 @@ def display_output(zipname, dataname):
     <p>%s</p>
      % (zipname, dataname, predictions)'''
 
+def read_files():
+    uploads_folder = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'])
+    global datafiles
+    global modelfiles
+    for file in os.listdir(uploads_folder): 
+        filepath = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], file)
+        if file.endswith(('xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt')):
+            datafiles.append((filepath, Path(filepath).stem, Path(filepath).suffix, len(pd.read_excel(filepath))))
+
+    return
+
 
 def clean_text(text):
     
@@ -195,4 +221,5 @@ def clean_text(text):
     return text
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    read_files()
+    app.run(debug=True, port=5001)
