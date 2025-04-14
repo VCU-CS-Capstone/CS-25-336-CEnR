@@ -80,6 +80,8 @@
                 <option>Model 2</option>
             </select>
             <button class="btn run">Run</button> 
+            <div id="modelDescription" style="margin-top: 10px; font-style: italic; color: #555;">
+            </div>
             -->
             
             <div class="data-distribution">
@@ -102,3 +104,20 @@
     </section>
 </body>
 </html>
+<script>
+    document.getElementById('modelSelect').addEventListener('change', function () {
+        const descriptionBox = document.getElementById('modelDescription');
+        const selectedModel = this.value;
+
+        let description = '';
+        if (selectedModel === 'model1') {
+            description = 'Model 1 description';
+        } else if (selectedModel === 'model2') {
+            description = 'Model 2 description';
+        } else {
+            description = '';
+        }
+
+        descriptionBox.textContent = description;
+    });
+</script>
