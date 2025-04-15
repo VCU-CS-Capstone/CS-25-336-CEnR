@@ -78,11 +78,19 @@
                 <option>Model 1</option>
                 <option>Model 2</option>
             </select>
+<<<<<<< HEAD
             <button class="btn run">Run</button>
             <div id="modelDescription" style="margin-top: 10px; font-style: italic; color: #555;">
             </div>
         -->
 
+=======
+            <button class="btn run">Run</button> 
+            <div id="modelDescription" style="margin-top: 10px; font-style: italic; color: #555;">
+            </div>
+            -->
+            
+>>>>>>> 888b2e6bbd7863c077a9e0d8e6787ec84e4477f8
             <div class="data-distribution">
                 <h3>Data Distribution</h3>
                 <div class="chart-placeholder">Select a Dataset to see data breakdowns</div>
@@ -104,6 +112,7 @@
 </body>
 </html>
 <script>
+<<<<<<< HEAD
     // Model descriptions from Flask context (rendered as a JS object)
     const modelDescriptions = {{ model_descriptions|tojson }};
 
@@ -118,4 +127,21 @@
 
     // Trigger once on page load
     modelDropdown.dispatchEvent(new Event('change'));
+=======
+    document.getElementById('modelSelect').addEventListener('change', function () {
+        const descriptionBox = document.getElementById('modelDescription');
+        const selectedModel = this.value;
+
+        let description = '';
+        if (selectedModel === 'model1') {
+            description = 'Model 1 description';
+        } else if (selectedModel === 'model2') {
+            description = 'Model 2 description';
+        } else {
+            description = '';
+        }
+
+        descriptionBox.textContent = description;
+    });
+>>>>>>> 888b2e6bbd7863c077a9e0d8e6787ec84e4477f8
 </script>
