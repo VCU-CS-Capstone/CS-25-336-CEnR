@@ -9,7 +9,7 @@ import tarfile
 import pandas as pd
 import string
 import re
-from simpletransformers.classification import ClassificationModel
+##
 
 import nltk
 from nltk.corpus import stopwords
@@ -43,6 +43,15 @@ model_args = {
     'silent':True,
     'no_cache':True,
 }
+##make dynamic
+modelfiles = [
+    ("model1.pk1, "Model 1"),
+    ("model2.pk1", "Model 2"),
+    ]
+model_descriptions = {
+    "model1.pk1": "Model 1 description.",
+    "model2.pk2": "Model 2 description.",
+    }
 
 class RunForm(FlaskForm):
     dataset = SelectField('Select Dataset', validators=[DataRequired()])
@@ -59,7 +68,7 @@ class RunForm(FlaskForm):
         self.model.choices = model_choices
 
         #self.process()
-    
+
 compatible_data_filetypes = {'xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt'}
 compatible_model_compressions = {}
 
@@ -84,8 +93,8 @@ def main_page():
             if(modelfile and (modelfile.filename.rsplit('.', 1)[1].lower() in compatible_model_compressions)):
                 modelfile_name = secure_filename(modelfile.filename)
                 modelfile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], modelfile_name))
-                
-    return render_template('CEnR_HTML.html', run_form=run_form)
+
+    return render_template('CEnR_HTML.html', run_form=run_form, model_descriptions=model_descriptions)
 
 '''
 @app.route("/", methods = ['GET', 'POST'])
@@ -101,7 +110,7 @@ def upload_files():
 
         zipfile = request.files['zipfile']
         datafile = request.files['datafile']
-        
+
         if zipfile.filename == '':
             flash('No zip file selected')
             return redirect(request.url)
@@ -109,7 +118,7 @@ def upload_files():
             flash('No data file selected')
             return redirect(request.url)
 
-        if (zipfile and (zipfile.filename.rsplit('.', 1)[1].lower() in {'tar'}) 
+        if (zipfile and (zipfile.filename.rsplit('.', 1)[1].lower() in {'tar'})
         and datafile and (datafile.filename.rsplit('.', 1)[1].lower() in {'xlsx'})):
             zipfile_name = secure_filename(zipfile.filename)
             datafile_name = secure_filename(datafile.filename)
@@ -144,7 +153,7 @@ def display_output(zipname, dataname):
     bestcheckpoint_model = ClassificationModel("bert", f"{UPLOAD_FOLDER}/{zipname.rsplit('.', 1)[0]}", args=model_args, num_labels=3, use_cuda=False)
     predictions, raw_outputs = bestcheckpoint_model.predict(valtext)
 
-    return 
+    return
     <!doctype html>
     <title>Outputs</title>
     <h1>Output for selected files: %s, %s </h1>
@@ -155,7 +164,7 @@ def read_files():
     uploads_folder = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'])
     global datafiles
     global modelfiles
-    for file in os.listdir(uploads_folder): 
+    for file in os.listdir(uploads_folder):
         filepath = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], file)
         if file.endswith(('xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt')):
             datafiles.append((filepath, Path(filepath).stem, Path(filepath).suffix, len(pd.read_excel(filepath))))
@@ -164,18 +173,18 @@ def read_files():
 
 
 def clean_text(text):
-    
+
     ## Remove puncuation
     text = text.translate(string.punctuation)
-    
+
     ## Convert words to lower case and split them
     text = text.lower().split()
-    
+
     ## Remove stop words
     #nltk.download('stopwords')
     stops = set(stopwords.words("english"))
     text = [w for w in text if not w in stops and len(w) >= 3]
-    
+
     text = " ".join(text)
     ## Clean the text
     text = re.sub(r"[^A-Za-z0-9^,!.\/'+-=]", " ", text)

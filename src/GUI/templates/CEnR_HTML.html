@@ -41,17 +41,16 @@
                 </select>
                 <select id="models" class="dropdown">
                     <option value="none" selected disabled hidden>Select a Model</option>
-                    {% for field in run_form.model %}
-                    {{ field }}
-                    {% endfor %}
+                    {{ run_form.model.label }} {{ run_form.model(id='model-dropdown') }}
                 </select>
+                <div id="model-description" style="margin-top:10px; font-style: italic;"></div>
                 <button type="submit" class="btn run" style="margin:0;display:inline-block">Run</button>
             </form>
 
             <script type="text/javascript">
                 function showlines(isDefault, value) {
-                    if(!isDefault) 
-                        alert(value.split(',')[3].slice(0,-1)); 
+                    if(!isDefault)
+                        alert(value.split(',')[3].slice(0,-1));
             }
             </script>
 
@@ -79,9 +78,11 @@
                 <option>Model 1</option>
                 <option>Model 2</option>
             </select>
-            <button class="btn run">Run</button> 
-            -->
-            
+            <button class="btn run">Run</button>
+            <div id="modelDescription" style="margin-top: 10px; font-style: italic; color: #555;">
+            </div>
+        -->
+
             <div class="data-distribution">
                 <h3>Data Distribution</h3>
                 <div class="chart-placeholder">Select a Dataset to see data breakdowns</div>
@@ -102,3 +103,19 @@
     </section>
 </body>
 </html>
+<script>
+    // Model descriptions from Flask context (rendered as a JS object)
+    const modelDescriptions = {{ model_descriptions|tojson }};
+
+    const modelDropdown = document.getElementById('model-dropdown');
+    const descriptionBox = document.getElementById('model-description');
+
+    modelDropdown.addEventListener('change', function () {
+        const selectedValue = modelDropdown.value;
+        const description = modelDescriptions[selectedValue] || "No description available.";
+        descriptionBox.textContent = description;
+    });
+
+    // Trigger once on page load
+    modelDropdown.dispatchEvent(new Event('change'));
+</script>
