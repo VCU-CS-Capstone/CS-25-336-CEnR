@@ -25,6 +25,7 @@ app.config['SECRET_KEY'] = "thiskeyisnotsecret"
 
 datafiles = []
 modelfiles = []
+model_descr = {}
 
 model_args = {
     'evaluate_during_training': False,
@@ -43,20 +44,17 @@ model_args = {
     'silent':True,
     'no_cache':True,
 }
-##make dynamic
-modelfiles = [
-    ("model1.pk1, "Model 1"),
-    ("model2.pk1", "Model 2"),
-    ]
-model_descriptions = {
-    "model1.pk1": "Model 1 description.",
-    "model2.pk2": "Model 2 description.",
-    }
+
+def get_descr():
+    # Load description map if available
+    metadata_path = os.path.join(model_dir, 'model_info.json')
+    if os.path.exists(metadata_path):
+        with open(metadata_path, 'r') as f:
+            model_descriptions = json.load(f)
 
 class RunForm(FlaskForm):
     dataset = SelectField('Select Dataset', validators=[DataRequired()])
     model = SelectField('Select Model', validators=[DataRequired()])
-
 
     def updateForm(self):
         global datafiles
@@ -66,6 +64,8 @@ class RunForm(FlaskForm):
 
         model_choices = [(file, file[1]) for file in modelfiles]
         self.model.choices = model_choices
+
+
 
         #self.process()
 
@@ -94,7 +94,7 @@ def main_page():
                 modelfile_name = secure_filename(modelfile.filename)
                 modelfile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], modelfile_name))
 
-    return render_template('CEnR_HTML.html', run_form=run_form, model_descriptions=model_descriptions)
+    return render_template('CEnR_HTML.html', run_form=run_form, model_descr=model_descr)
 
 '''
 @app.route("/", methods = ['GET', 'POST'])
