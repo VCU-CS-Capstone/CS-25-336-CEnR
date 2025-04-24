@@ -43,7 +43,6 @@
                     <option value="none" selected disabled hidden>Select a Model</option>
                    {{ run_form.model.label }} {{ run_form.model(id='model-dropdown') }}
                 </select>
-                <head>
                 <script>
                     function updateModelDescription() {
                         const modelSelect = document.getElementById("model");
@@ -51,38 +50,45 @@
                         const descriptions = {{ model_descr | tojson }};
                         const descriptionBox = document.getElementById("model-description");
 
-                        if (selectedModel in descriptions) {
+                        if (selectedModel in descriptions) 
                             descriptionBox.textContent = descriptions[selectedModel];
-                        } else {
+                         else 
                             descriptionBox.textContent = "Select a model to see its description.";
-                        }
+                        
                     }
                 </script>
-                </head>
-                <body>
-    <form method="POST">
-       <!-- {{ run_form.hidden_tag() }} -->
-        <input type="hidden" name="form_name" value="run-model">
 
-       <!--- {{ run_form.dataset.label }} {{ run_form.dataset(class="dropdown") }}<br>
-        {{ run_form.model.label }}
-        {{ run_form.model(class="dropdown", id="model", onchange="updateModelDescription()") }}<br> --->
+                <script type="text/javascript">
+                    function showlines(isDefault, value) {
+                        const descriptionBox = document.getElementById("dataset-description")
+                        if(!isDefault)
+                            descriptionBox.textContent = `Selected a dataset with ${value.split(',')[3].slice(0,-1)} lines.`
+                            // alert(value.split(',')[3].slice(0,-1));
+                    }
+                </script>
+            </form>
 
-        <div id="model-description" style="margin-top: 10px; font-style: italic;">
-            Select a model to see its description.
-        </div>
+            <form method="POST">
+            <!-- {{ run_form.hidden_tag() }} -->
+                <input type="hidden" name="form_name" value="run-model">
 
-        <br>
-        <button type="submit" class="btn run" style="margin:0;display:inline-block">Run</button>
-    </form>
+            <!--- {{ run_form.dataset.label }} {{ run_form.dataset(class="dropdown") }}<br>
+                {{ run_form.model.label }}
+                {{ run_form.model(class="dropdown", id="model", onchange="updateModelDescription()") }}<br> --->
 
-            <script type="text/javascript">
-                function showlines(isDefault, value) {
-                    if(!isDefault)
-                        alert(value.split(',')[3].slice(0,-1));
-            }
-            </script>
+                <div id="dataset-description" style="margin-top: 10px; font-style: italic">
+                    Select a dataset to see its description. 
+                </div>
 
+                <div id="model-description" style="margin-top: 10px; font-style: italic;">
+                    Select a model to see its description.
+                </div>
+
+                <br>
+                <button type="submit" class="btn run" style="margin:0;display:inline-block">Run</button>
+            </form>
+
+            <!-- New File Upload Handlers -->
             <form method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="form_name" value="upload-dataset">
                 <h5 style="display: inline;">Upload new dataset file: </h5>
@@ -96,6 +102,7 @@
                 <input type=file name=modelfile>
                 <input type=submit value=Upload>
             </form>
+
             <!---
             <select class="dropdown">
                 <option>Select Dataset</option>
@@ -110,7 +117,7 @@
             <button class="btn run">Run</button>
             <div id="modelDescription" style="margin-top: 10px; font-style: italic; color: #555;">
             </div>
-        -->
+            -->
 
             <div class="data-distribution">
                 <h3>Data Distribution</h3>
