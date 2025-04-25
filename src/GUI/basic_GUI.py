@@ -52,10 +52,16 @@ model_args = {
 
 def get_descr():
     # Load description map if available
+    model_dir = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], 'models')  # define model_dir
     metadata_path = os.path.join(model_dir, 'model_info.json')
+
+    model_descriptions = {}
+
     if os.path.exists(metadata_path):
         with open(metadata_path, 'r') as f:
             model_descriptions = json.load(f)
+
+    return model_descriptions
 
 class RunForm(FlaskForm):
     dataset = SelectField('Select Dataset', validators=[DataRequired()])
@@ -80,6 +86,7 @@ compatible_model_compressions = {}
 def main_page():
     run_form = RunForm()
     run_form.updateForm()
+    model_descr = get_descr()
     if request.method == 'POST':
         if(request.form['form_name'] == "run-model"):
             if run_form.validate_on_submit():
@@ -96,7 +103,7 @@ def main_page():
             modelfile = request.files['modelfile']
             if(modelfile and (modelfile.filename.rsplit('.', 1)[1].lower() in compatible_model_compressions)):
                 modelfile_name = secure_filename(modelfile.filename)
-                modelfile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], modelfile_name))
+                modelfile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], 'models', modelfile_name))
                 read_files()
 
     run_form.updateForm()
