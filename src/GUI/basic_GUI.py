@@ -18,13 +18,16 @@ from nltk.stem import SnowballStemmer, WordNetLemmatizer
 
 
 UPLOAD_FOLDER = 'uploads'
+REFERENCE_FOLDER = 'reference files'
 ALLOWED_EXTENSIONS = {}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['REFERENCE_FOLDER'] = REFERENCE_FOLDER
 app.config['SECRET_KEY'] = "thiskeyisnotsecret"
 
 datafiles = []
+datafiles_df = []
 modelfiles = []
 model_descr = {}
 
@@ -163,14 +166,61 @@ def display_output(zipname, dataname):
 
 def read_files():
     uploads_folder = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'])
+    references_folder = os.path.join(os.getcwd(), app.config['REFERENCE_FOLDER'])
+    references_file = os.listdir(references_folder)[0]
+    reference = pd.read_excel(references_file).rename(columns={"IRB Protocol": "IRB_ID"})
+
     global datafiles
+    global datafiles_df
     global modelfiles
     for file in os.listdir(uploads_folder):
         filepath = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], file)
         if file.endswith(('xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt')):
-            datafiles.append((filepath, Path(filepath).stem, Path(filepath).suffix, len(pd.read_excel(filepath))))
+            num_lines = len(pd.read_excel(filepath))
+        
+        # JSON not well-represented in sample data; only two json files exist, and both are missing headers which are critical for data search in this process
+        # Therefore json compatibility was not a priority
+        # It's currently recommended to convert a json file into a properly-formatted excel file instead, which ensures proper processing
+        #elif file.endswith(('json')):
+        #    num_lines = len(pd.read_json(filepath, typ='frame'))
+        datafiles.append((filepath, Path(filepath).stem, Path(filepath).suffix, num_lines))
 
+        df = pd.read_excel(filepath)
+        if('DateApproved' in df.columns):
+            df = df.dropna(subset=['DateApproved'])
+        
+        if('ID' in df.columns): df.rename(columns={"ID": "IRB_ID"})
+        elif('ProtocolNum' in df.columns): df.rename(columns={"ProtocolNum": "IRB_ID"})
+        elif('Protocol ID' in df.columns): df.rename(columns={"Protocol ID": "IRB_ID"})
+        elif('IRB Protocol' in df.columns): df.rename(columns={"IRB Protocol": "IRB_ID"})
+        elif('BaseProtocolNum' in df.columns): df.rename(columns={"BaseProtocolNum": "IRB_ID"})
+
+        distribution_df = pd.merge(df, reference, on="IRB_ID", how='left')
+        distribution_df_only_non_null = pd.merge(df, reference, on="IRB_ID", how='inner')
+
+        
+
+        """id_aliases = ['ID', 'ProtocolNum', 'Protocol ID', 'IRB Protocol', 'BaseProtocolNum']
+        IRB_id = df[[i for i in id_aliases if i in df.columns]]
+        IRB_id = IRB_id.rename(index={0: "IRB_ID"}).iloc[:, 0]
+
+        AimsGoals_aliases = ['AimsGoal', 'AimsGoals']
+        aims_goals = df[[i for i in AimsGoals_aliases if i in df.columns]]
+        aims_goals = aims_goals.rename(index={0: "Aims_Goals"}).iloc[:, 0]
+
+        hypothesis = df['Hypothesis']
+
+        background = df['Background']
+
+        StudyDesign_aliases = ['Study Design', 'StudyDesign']
+        study_design = df[[i for i in StudyDesign_aliases if i in df.columns]]
+        study_design = study_design.rename(index={0: "Study_Design"}).iloc[:, 0]"""
+        
+
+        #IRB_id = pd.read_excel(filepath, usecols=lambda x: x in ['ID', 'ProtocolNum', 'Protocol ID', 'IRB Protocol', 'BaseProtocolNum'])
     return
+
+
 
 
 def clean_text(text):
