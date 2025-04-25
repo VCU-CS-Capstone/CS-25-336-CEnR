@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 import os
 from pathlib import Path
 import tarfile
+import zipfile
 import pandas as pd
 import string
 import re
@@ -27,7 +28,7 @@ app.config['REFERENCE_FOLDER'] = REFERENCE_FOLDER
 app.config['SECRET_KEY'] = "thiskeyisnotsecret"
 
 datafiles = []
-datafiles_df = []
+merged_distribution_files = []
 modelfiles = []
 model_descr = {}
 
@@ -69,9 +70,7 @@ class RunForm(FlaskForm):
         model_choices = [(file, file[1]) for file in modelfiles]
         self.model.choices = model_choices
 
-
-
-        #self.process()
+        self.process()
 
 compatible_data_filetypes = {'xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt'}
 compatible_model_compressions = {}
@@ -91,13 +90,16 @@ def main_page():
             datafile = request.files['datafile']
             if(datafile and (datafile.filename.rsplit('.', 1)[1].lower() in compatible_data_filetypes)):
                 datafile_name = secure_filename(datafile.filename)
-                datafile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], datafile_name))
+                datafile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], 'datafiles', datafile_name))
+                read_files()
         elif(request.form['form_name'] == "upload-model"):
             modelfile = request.files['modelfile']
             if(modelfile and (modelfile.filename.rsplit('.', 1)[1].lower() in compatible_model_compressions)):
                 modelfile_name = secure_filename(modelfile.filename)
                 modelfile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], modelfile_name))
+                read_files()
 
+    run_form.updateForm()
     return render_template('CEnR_HTML.html', run_form=run_form, model_descr=model_descr)
 
 '''
@@ -167,14 +169,14 @@ def display_output(zipname, dataname):
 def read_files():
     uploads_folder = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'])
     references_folder = os.path.join(os.getcwd(), app.config['REFERENCE_FOLDER'])
-    references_file = os.listdir(references_folder)[0]
+    references_file = os.path.join(os.getcwd(), app.config['REFERENCE_FOLDER'], os.listdir(references_folder)[0])
     reference = pd.read_excel(references_file).rename(columns={"IRB Protocol": "IRB_ID"})
 
     global datafiles
-    global datafiles_df
+    global merged_distribution_files
     global modelfiles
-    for file in os.listdir(uploads_folder):
-        filepath = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], file)
+    for file in os.listdir(f"{uploads_folder}/datafiles"):
+        filepath = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], 'datafiles', file)
         if file.endswith(('xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt')):
             num_lines = len(pd.read_excel(filepath))
         
@@ -183,22 +185,31 @@ def read_files():
         # It's currently recommended to convert a json file into a properly-formatted excel file instead, which ensures proper processing
         #elif file.endswith(('json')):
         #    num_lines = len(pd.read_json(filepath, typ='frame'))
-        datafiles.append((filepath, Path(filepath).stem, Path(filepath).suffix, num_lines))
+
+        datafile_object = ((filepath, Path(filepath).stem, Path(filepath).suffix, num_lines))
+        if(datafile_object in datafiles): break     # If this file has already been processed, skip it
+            
+        datafiles.append(datafile_object)
 
         df = pd.read_excel(filepath)
         if('DateApproved' in df.columns):
             df = df.dropna(subset=['DateApproved'])
         
-        if('ID' in df.columns): df.rename(columns={"ID": "IRB_ID"})
-        elif('ProtocolNum' in df.columns): df.rename(columns={"ProtocolNum": "IRB_ID"})
-        elif('Protocol ID' in df.columns): df.rename(columns={"Protocol ID": "IRB_ID"})
-        elif('IRB Protocol' in df.columns): df.rename(columns={"IRB Protocol": "IRB_ID"})
-        elif('BaseProtocolNum' in df.columns): df.rename(columns={"BaseProtocolNum": "IRB_ID"})
+        if('ID' in df.columns): 
+            df = df.rename(columns={"ID": "IRB_ID"})
+        elif('ProtocolNum' in df.columns): df = df.rename(columns={"ProtocolNum": "IRB_ID"})
+        elif('Protocol ID' in df.columns): df = df.rename(columns={"Protocol ID": "IRB_ID"})
+        elif('IRB Protocol' in df.columns): df = df.rename(columns={"IRB Protocol": "IRB_ID"})
+        elif('BaseProtocolNum' in df.columns): df = df.rename(columns={"BaseProtocolNum": "IRB_ID"})
+        else: break # Prevents an exception if the excel file isn't properly formatted with an acceptable IRB ID field
+        df = df.drop_duplicates(subset="IRB_ID")
 
         distribution_df = pd.merge(df, reference, on="IRB_ID", how='left')
         distribution_df_only_non_null = pd.merge(df, reference, on="IRB_ID", how='inner')
 
-        
+        merged_distribution_files.append((distribution_df, len(distribution_df), distribution_df_only_non_null, len(distribution_df_only_non_null)))
+
+        print(len(distribution_df), len(distribution_df_only_non_null), len(distribution_df) - len(distribution_df_only_non_null))
 
         """id_aliases = ['ID', 'ProtocolNum', 'Protocol ID', 'IRB Protocol', 'BaseProtocolNum']
         IRB_id = df[[i for i in id_aliases if i in df.columns]]
@@ -215,9 +226,23 @@ def read_files():
         StudyDesign_aliases = ['Study Design', 'StudyDesign']
         study_design = df[[i for i in StudyDesign_aliases if i in df.columns]]
         study_design = study_design.rename(index={0: "Study_Design"}).iloc[:, 0]"""
-        
 
-        #IRB_id = pd.read_excel(filepath, usecols=lambda x: x in ['ID', 'ProtocolNum', 'Protocol ID', 'IRB Protocol', 'BaseProtocolNum'])
+    # Look for a packaged file which should contain a model
+    # Only tarball and .zip formats are currently supported; support could be extended to ex. 7zip and gzip
+    for file in os.listdir(f"{uploads_folder}"): 
+        filepath = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], file)
+        if os.path.isfile(filepath):
+            if file.endswith(('tar', 'tgz', 'tbz', 'txz', 'tzst')):
+                with tarfile.open(filepath, "r") as tar:
+                    tar.extractall(f"{uploads_folder}/models")
+            elif file.endswith(('zip')):
+                with zipfile.ZipFile(filepath, "r") as zip:
+                    zip.extractall(f"{uploads_folder}/models")
+
+
+    for model_folder in os.listdir(f"{uploads_folder}/models"):
+        break
+
     return
 
 
