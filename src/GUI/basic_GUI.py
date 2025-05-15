@@ -1,6 +1,6 @@
 from flask import Flask, flash, request, redirect, url_for, render_template
-from flask_wtf import FlaskForm
-from wtforms import SelectField, SelectMultipleField
+from flask_wtf import FlaskForm, CSRFProtect
+from wtforms import SelectField, SubmitField
 from wtforms.validators import DataRequired
 from werkzeug.utils import secure_filename
 import os
@@ -26,6 +26,8 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['REFERENCE_FOLDER'] = REFERENCE_FOLDER
 app.config['SECRET_KEY'] = "thiskeyisnotsecret"
+csrf = CSRFProtect()
+csrf.init_app(app)
 
 datafiles = []
 merged_distribution_files = []
@@ -66,6 +68,7 @@ def get_descr():
 class RunForm(FlaskForm):
     dataset = SelectField('Select Dataset', validators=[DataRequired()])
     model = SelectField('Select Model', validators=[DataRequired()])
+    #submit = SubmitField('Submit')
 
     def updateForm(self):
         global datafiles
@@ -88,12 +91,7 @@ def main_page():
     run_form.updateForm()
     model_descr = get_descr()
     if request.method == 'POST':
-        if(request.form['form_name'] == "run-model"):
-            if run_form.validate_on_submit():
-                selected_dataset = run_form.dataset.data
-                selected_model = run_form.model.data
-                return f'You selected: {selected_dataset}, {selected_model}'
-        elif(request.form['form_name'] == "upload-dataset"):
+        if(request.form['form_name'] == "upload-dataset"):
             datafile = request.files['datafile']
             if(datafile and (datafile.filename.rsplit('.', 1)[1].lower() in compatible_data_filetypes)):
                 datafile_name = secure_filename(datafile.filename)
@@ -105,6 +103,17 @@ def main_page():
                 modelfile_name = secure_filename(modelfile.filename)
                 modelfile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], modelfile_name))
                 read_files()
+        elif(request.form['form_name'] == "run-model"):
+            print(request.form.get('dataset'), request.form.get('model'))
+            if run_form.validate():
+                selected_dataset = request.form.get('dataset')[0]
+                selected_model = request.form.get('model')[0]
+                print(f'You selected: {selected_dataset}, {selected_model}')
+                #return f'You selected: {selected_dataset}, {selected_model}'
+            print(run_form.errors)
+        else:
+            print(request.form)
+        
 
     run_form.updateForm()
     return render_template('CEnR_HTML.html', run_form=run_form, model_descr=model_descr)
@@ -213,7 +222,7 @@ def read_files():
 
         distribution_df = pd.merge(df, reference, on="IRB_ID", how='left')
         distribution_df_only_non_null = pd.merge(df, reference, on="IRB_ID", how='inner')
-
+        
         merged_distribution_files.append((distribution_df, len(distribution_df), distribution_df_only_non_null, len(distribution_df_only_non_null)))
 
         #print(len(distribution_df), len(distribution_df_only_non_null), len(distribution_df) - len(distribution_df_only_non_null))
@@ -252,9 +261,9 @@ def read_files():
     #    print(model_folder)
         filepath = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], 'models', model_folder)
     #    print(filepath)
-        modelfile_object = (Path(filepath).stem, Path(filepath).stem)
+        modelfile_object = (filepath, Path(filepath).stem)
         if modelfile_object in modelfiles: break
-        modelfiles.append((Path(filepath).stem, Path(filepath).stem))
+        modelfiles.append(modelfile_object)
 
     return
 

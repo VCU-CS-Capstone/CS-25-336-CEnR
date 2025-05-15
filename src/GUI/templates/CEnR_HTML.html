@@ -31,15 +31,15 @@
     <section id="section02" class="model-run">
         <div class="container">
             <form method="POST">
-                <input type="hidden" name="form_name" value="run-model">
                 {{ run_form.csrf_token }}
-                <select id="dataset" class="dropdown" onchange="showlines(this.options[this.selectedIndex].defaultSelected, this.options[this.selectedIndex].value)">
+                <input type="hidden" name="form_name" value="run-model">
+                <select id="dataset" name="dataset" class="dropdown" onchange="showlines(this.options[this.selectedIndex].defaultSelected, this.options[this.selectedIndex].value)">
                     <option value="none" selected disabled hidden>Select a Dataset</option>
                     {% for field in run_form.dataset %}
                     {{ field }}
                     {% endfor %}
                 </select>
-                <select id="model" class="dropdown">
+                <select id="model" name="model" class="dropdown">
                     <option value="none" selected disabled hidden>Select a Model</option>
                     {% for field in run_form.model %}
                     {{ field }}
@@ -68,15 +68,6 @@
                             // alert(value.split(',')[3].slice(0,-1));
                     }
                 </script>
-            </form>
-
-            <form method="POST">
-            <!-- {{ run_form.hidden_tag() }} -->
-                <input type="hidden" name="form_name" value="run-model">
-
-            <!--- {{ run_form.dataset.label }} {{ run_form.dataset(class="dropdown") }}<br>
-                {{ run_form.model.label }}
-                {{ run_form.model(class="dropdown", id="model", onchange="updateModelDescription()") }}<br> --->
 
                 <div id="dataset-description" style="margin-top: 10px; font-style: italic">
                     Select a dataset to see its description. 
@@ -90,7 +81,6 @@
                     (IRB) research studies by the level of community engagement. The model supports universities in tracking and 
                     reporting CEnR (Community-Engaged Research) involvement more systematically and at scale.
                 </div>
-
                 <br>
                 <button type="submit" class="btn run" style="margin:0;display:inline-block">Run</button>
             </form>

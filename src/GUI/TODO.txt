@@ -1,0 +1,5 @@
+0. Current Fix: I've changed the form handling slightly, and the 'run' button doesn't currently validate correctly. I'm actively working on fixing this.
+1. Configure the model handler to run as a background process in Athena, sent as a separate task that updates the page when complete
+2. Improve the on-page navbar
+3. Add a help page to the interface itself
+4. Improve the markdown formatting of the README file
