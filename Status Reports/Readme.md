@@ -34,11 +34,10 @@ This readme.md serves as a succinct summary of weekly status reports.
 | Week 6 02/21 Status Report | Started work on combining wireframe and framework, tried to find usable metadata | Continue work merging wireframe and framework, try to resolve issue with metadata | Files used in program do not have metadata we can use |
 | Week 7 02/28 Status Report | Got raw data to use for metadata, worked on frontend and backend of website | Make new file using raw data, work on website | No issues to report |
 | Week 8 03/07 Status Report | Reviewed new raw data together; Discussed classification of metadata | Continue integrating front & backend; work on classifying new raw data; enjoy spring break | No issues to report |
-| Week 9 03/21 Status Report | | | |
-| Week 10 03/28 Status Report | | | |
-| Week 11 04/04 Status Report | | | |
-| Week 12 04/11 Status Report | | | |
-| Week 13 04/18 Status Report | | | |
-| Week 14 04/25 Status Report | | | |
-| Week 15 05/02 Status Report | | | |
-| Week 16 05/09 Status Report | | | |
+| Week 9 03/21 Status Report | UI coming together, have nav bar | Finish poster --> add graphics and data; Add 'save results' option for athena desktop session; chart graphics | Displaying accurate graphics |
+| Week 10 03/28 Status Report | Finished abstract; Discussed how poster should look | Replace poster schema with images (metadata, website picture); email Dr. Olex & McInnes before submission | Dropdown selection issues (minor) |
+| Week 11 04/04 Status Report | Website nearly complete, just needs finishing touches | Team acknowledgements & model descriptions | No issues to report |
+| Week 12 04/11 Status Report | No Meeting | Final touches | No issues to report |
+| Week 13 04/18 Status Report | Finished | Prep for expo | No issues to report |
+| Week 14 04/25 Status Report | Expo! | -- | -- |
+

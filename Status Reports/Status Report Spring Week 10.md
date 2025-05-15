@@ -7,10 +7,10 @@
 **Faculty Advisor: Bridget McInnes**
 
 ## 1) Accomplishments this week ##
-- Reviewed new raw data together; Discussed classification of metadata
+- Finished abstract; Discussed how poster should look
 
 ## 2) Milestones to be completed next week ##
-- Continue integrating front & backend; work on classifying new raw data; enjoy spring break
+- Replace poster schema with images (metadata, website picture); email Dr. Olex & McInnes before submission
 
 ## 3) Issues, problems or concerns ##
-- No issues to report
+- Dropdown selection issues (minor)

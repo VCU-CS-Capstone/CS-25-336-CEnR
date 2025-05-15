@@ -7,10 +7,10 @@
 **Faculty Advisor: Bridget McInnes**
 
 ## 1) Accomplishments this week ##
-- Reviewed new raw data together; Discussed classification of metadata
+- Website nearly complete, just needs finishing touches
 
 ## 2) Milestones to be completed next week ##
-- Continue integrating front & backend; work on classifying new raw data; enjoy spring break
+- Team acknowledgements & model descriptions
 
 ## 3) Issues, problems or concerns ##
 - No issues to report
