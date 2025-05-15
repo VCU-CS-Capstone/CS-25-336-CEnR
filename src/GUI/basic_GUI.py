@@ -79,7 +79,7 @@ class RunForm(FlaskForm):
         self.process()
 
 compatible_data_filetypes = {'xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt'}
-compatible_model_compressions = {}
+compatible_model_compressions = {'zip', 'tar'}
 
 @app.route("/", methods= ['GET', 'POST'])
 @app.route("/index", methods= ['GET', 'POST'])
@@ -103,7 +103,7 @@ def main_page():
             modelfile = request.files['modelfile']
             if(modelfile and (modelfile.filename.rsplit('.', 1)[1].lower() in compatible_model_compressions)):
                 modelfile_name = secure_filename(modelfile.filename)
-                modelfile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], 'models', modelfile_name))
+                modelfile.save(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], modelfile_name))
                 read_files()
 
     run_form.updateForm()
@@ -216,7 +216,7 @@ def read_files():
 
         merged_distribution_files.append((distribution_df, len(distribution_df), distribution_df_only_non_null, len(distribution_df_only_non_null)))
 
-        print(len(distribution_df), len(distribution_df_only_non_null), len(distribution_df) - len(distribution_df_only_non_null))
+        #print(len(distribution_df), len(distribution_df_only_non_null), len(distribution_df) - len(distribution_df_only_non_null))
 
         """id_aliases = ['ID', 'ProtocolNum', 'Protocol ID', 'IRB Protocol', 'BaseProtocolNum']
         IRB_id = df[[i for i in id_aliases if i in df.columns]]
@@ -238,17 +238,23 @@ def read_files():
     # Only tarball and .zip formats are currently supported; support could be extended to ex. 7zip and gzip
     for file in os.listdir(f"{uploads_folder}"): 
         filepath = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], file)
+        filename = os.path.basename(file)
         if os.path.isfile(filepath):
             if file.endswith(('tar', 'tgz', 'tbz', 'txz', 'tzst')):
                 with tarfile.open(filepath, "r") as tar:
-                    tar.extractall(f"{uploads_folder}/models")
+                    tar.extractall(f"{uploads_folder}/models/{filename}")
             elif file.endswith(('zip')):
                 with zipfile.ZipFile(filepath, "r") as zip:
-                    zip.extractall(f"{uploads_folder}/models")
+                    zip.extractall(f"{uploads_folder}/models/{filename}")
 
-
+    #print(os.listdir(f"{uploads_folder}/models"))
     for model_folder in os.listdir(f"{uploads_folder}/models"):
-        break
+    #    print(model_folder)
+        filepath = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], 'models', model_folder)
+    #    print(filepath)
+        modelfile_object = (Path(filepath).stem, Path(filepath).stem)
+        if modelfile_object in modelfiles: break
+        modelfiles.append((Path(filepath).stem, Path(filepath).stem))
 
     return
 
@@ -314,4 +320,4 @@ def clean_text(text):
 
 if __name__ == '__main__':
     read_files()
-    app.run(debug=True, port=5001)
+    app.run()

@@ -39,9 +39,11 @@
                     {{ field }}
                     {% endfor %}
                 </select>
-                <select id="model" class="dropdown" onchange = "updateModelDescription(this.options[this.selectedIndex].defaultSelected, this.options[this.selectedIndex].value)">
+                <select id="model" class="dropdown">
                     <option value="none" selected disabled hidden>Select a Model</option>
-                   {{ run_form.model.label }} {{ run_form.model(id='model-dropdown') }}
+                    {% for field in run_form.model %}
+                    {{ field }}
+                    {% endfor %}
                 </select>
                 <script>
                     function updateModelDescription(isDefault, value) {
